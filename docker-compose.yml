@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:13.3
+    shm_size: 8g
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=perf_tester
+      - POSTGRES_DB=partition_test
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - overlay
+
+volumes:
+  postgres-db:
+
+networks:
+  overlay:
